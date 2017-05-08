@@ -1173,11 +1173,11 @@
             </control>
             <control>
                 <group>[Master]</group>
-                <key>crossfader</key>
+                <key>nop</key> <!-- crossfader -->
                 <status>0xB0</status>
                 <midino>0x16</midino>
                 <options>
-                    <normal/>
+                    <script-binding/>
                 </options>
             </control>
             <control>
