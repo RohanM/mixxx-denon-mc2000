@@ -414,7 +414,7 @@ mc2000.wheelTurn = function(channel, control, value, status, group) {
     var deck = channel + 1;
 
     // B: For a control that centers on 0x40 (64):
-    var newValue = (value - 64) / 2;
+    var newValue = (value - 64) / 3;
 
     // In either case, register the movement
     if (engine.isScratching(deck)) {
