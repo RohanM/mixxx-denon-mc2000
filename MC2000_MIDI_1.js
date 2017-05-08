@@ -403,14 +403,15 @@ mc2000.wheelTouch = function(channel, control, value, status, group){
 mc2000.wheelTurn = function(channel, control, value, status, group) {
     var deck = channel + 1;
 
-    // See if we're scratching. If not, skip this.
-    if (!engine.isScratching(deck)) return; // for 1.11.0 and above
-
     // B: For a control that centers on 0x40 (64):
-    var newValue=(value-64);
- 
+    var newValue = (value - 64);
+
     // In either case, register the movement
-    engine.scratchTick(deck,newValue);
+    if (engine.isScratching(deck)) {
+      engine.scratchTick(deck, newValue); // Scratch!
+    } else {
+      engine.setValue('[Channel'+deck+']', 'jog', newValue); // Pitch bend
+    }
 };
 
 
