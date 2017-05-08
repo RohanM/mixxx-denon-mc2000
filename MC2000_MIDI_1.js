@@ -2,7 +2,7 @@
  * Denon MC2000 controller script for Mixxx v1.11.0
  *
  * Written by Esteban Serrano Roloff.
- * 
+ *
  * 2014/03/2 V0.6.2 :	Functional & relatively untested version.
  *			Bug where play control would	become unresponsive after pressing hotcues fixed.
  *
@@ -43,14 +43,14 @@ mc2000.leds = {
 	cue: 			38,
 	play: 			39, // was wrong in the spec sheet as decimal value
 
-	loopin: 		36, 
-	loopout: 		64, 
+	loopin: 		36,
+	loopout: 		64,
 	autoloop: 		43,
-	fx1_1: 			92, 
-	
-	fx1_2: 			93, 
+	fx1_1: 			92,
+
+	fx1_2: 			93,
 	fx1_3: 			94,
-	fx2_1: 			96, 
+	fx2_1: 			96,
 	fx2_2: 			97,
 
 	fx2_3: 			98,
@@ -66,7 +66,7 @@ mc2000.control2CueNo = { 0x17: 1, 0x18: 2, 0x19: 3, 0x20: 4 };
 // ----------   Functions    ----------
 
 // Called when the MIDI device is opened & set up.
-mc2000.init = function(id, debug) {	
+mc2000.init = function(id, debug) {
 
 	mc2000.id = id;
 	mc2000.debug = debug;
@@ -108,7 +108,7 @@ mc2000.init = function(id, debug) {
 
 		// Monitor cue
 		engine.connectControl("[Channel"+i+"]", "pfl", "mc2000.pflSetLed");
-	
+
 	}
 
 	// ---- Controls for Samplers
@@ -138,7 +138,7 @@ mc2000.allLed2Default = function () {
 	// All leds OFF for deck 1 and 2
 	for (var led in mc2000.leds) {
 		mc2000.setLed(1,mc2000.leds[led],0);
-		mc2000.setLed(2,mc2000.leds[led],0);	
+		mc2000.setLed(2,mc2000.leds[led],0);
 	}
 
 	// Monitor cue leds OFF for deck 1 and 2 (use function setLed2)
@@ -155,7 +155,7 @@ mc2000.setLed = function(deck,led,status) {
 	var ledStatus = 0x4B; // Default OFF
 	switch (status) {
 		case 0: 	ledStatus = 0x4B; break; // OFF
-		case false: ledStatus = 0x4B; break; // OFF 
+		case false: ledStatus = 0x4B; break; // OFF
     	case 1: 	ledStatus = 0x4A; break; // ON
 		case true: 	ledStatus = 0x4A; break; // ON
     	case 2: 	ledStatus = 0x4C; break; // BLINK
@@ -184,7 +184,7 @@ mc2000.group2Deck = function(group) {
 
 mc2000.loop2NoEfx = function(nbloop) {
 	if (nbloop==1) nbloop=16;
-	return Math.log(nbloop)/Math.log(2); //2 4 8 16 -> 1 2 3 4	
+	return Math.log(nbloop)/Math.log(2); //2 4 8 16 -> 1 2 3 4
 };
 
 
@@ -218,7 +218,7 @@ mc2000.triggerAllHotcueControls = function(){
 		for (cueNo=1;cueNo<=4;cueNo++) {
 			engine.trigger("[Channel"+ch+"]","hotcue_"+cueNo+"_enabled");
 		}
-	}	
+	}
 };
 
 
@@ -246,13 +246,13 @@ mc2000.bendUpOrFf = function(channel, control, value, status, group) {
 		}else{
 			// Bend up
 			engine.setValue(group, "rate_temp_up", true);
-		}	
+		}
 	}
 	else{ // Button up
 		engine.setValue(group, "fwd", false);
 		engine.setValue(group, "rate_temp_up", false);
 	}
-	
+
 };
 
 mc2000.bendDnOrRew = function(channel, control, value, status, group) {
@@ -266,7 +266,7 @@ mc2000.bendDnOrRew = function(channel, control, value, status, group) {
 		}else{
 			// Bend down
 			engine.setValue(group, "rate_temp_down", true);
-		}	
+		}
 	}
 	else{ // Button up
 		engine.setValue(group, "back", false);
@@ -293,7 +293,7 @@ mc2000.beatsKnobTurn = function(channel, control, value, status, group) {
 	if (value === 0x01){
 		fwd = true;
 	}
-	
+
 	// Different action if shift down
 	if (mc2000.state["shift"] === true) {
 		// If shift is pressed, adjust the samplers volume (currently all of them will be updated at the same time)
@@ -317,7 +317,7 @@ mc2000.beatJump = function(group, beats, forward){
 
 	// *2 to compensate for stereo samples
 	var backsamples = backseconds*engine.getValue(group, "track_samplerate")*2;
-	
+
 	if (forward === true){
 		var newpos = cursample + (backsamples);
 	}else{
@@ -381,7 +381,7 @@ mc2000.hotcueActivateOrDelete = function(channel, control, value, status, group)
 // The button that enables/disables scratching
 mc2000.wheelTouch = function(channel, control, value, status, group){
 	var deck = channel + 1;
-	
+
 	if ((status & 0xF0) === 0x90) {    // If button down
         var alpha = 1.0/8;
         var beta = alpha/32;
