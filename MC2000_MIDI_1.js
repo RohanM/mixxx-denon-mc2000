@@ -4,7 +4,7 @@
  * Written by Esteban Serrano Roloff.
  *
  * 2014/03/2 V0.6.2 :	Functional & relatively untested version.
- *			Bug where play control would	become unresponsive after pressing hotcues fixed.
+ *			Bug where play control would become unresponsive after pressing hotcues fixed.
  *
  * Inspired by
  * Bertrand Espern's Denon MC3000 controller script V0.995, and
@@ -390,20 +390,21 @@ mc2000.hotcueActivateOrDelete = function(channel, control, value, status, group)
 
 // The button that enables/disables scratching
 mc2000.wheelTouch = function(channel, control, value, status, group){
-	var deck = channel + 1;
+    var deck = channel + 1;
 
-	if ((status & 0xF0) === 0x90) {    // If button down
+    if ((status & 0xF0) === 0x90) {    // If button down
         var alpha = 1.0/8;
         var beta = alpha/32;
 
         var rpm = 150.0;
 
-        if (mc2000.state["shift"] === true) // If shift is pressed, do a fast search
-        	rpm = 30.0;
+        // If shift is pressed, do a fast search
+        if (mc2000.state["shift"] === true) {
+            rpm = 30.0;
+        }
 
         engine.scratchEnable(deck, 128, rpm, alpha, beta, true);
-    }
-    else {    // If button up
+    } else {    // If button up
         engine.scratchDisable(deck);
     }
 };
@@ -418,9 +419,9 @@ mc2000.wheelTurn = function(channel, control, value, status, group) {
 
     // In either case, register the movement
     if (engine.isScratching(deck)) {
-      engine.scratchTick(deck, newValue); // Scratch!
+        engine.scratchTick(deck, newValue); // Scratch!
     } else {
-      engine.setValue('[Channel'+deck+']', 'jog', newValue / 3); // Pitch bend
+        engine.setValue('[Channel'+deck+']', 'jog', newValue / 3); // Pitch bend
     }
 };
 
