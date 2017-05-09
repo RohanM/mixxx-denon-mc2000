@@ -392,6 +392,13 @@ mc2000.hotcueActivateOrDelete = function(channel, control, value, status, group)
 mc2000.wheelTouch = function(channel, control, value, status, group){
     var deck = channel + 1;
 
+    // Disable scratching while leaving wheel active for pitch adjustments
+    // and seeking while paused. I feel like vinyl mode should do this, but
+    // for me, it disables the wheel entirely.
+    if (engine.getValue(group, 'play')) {
+        return;
+    }
+
     if ((status & 0xF0) === 0x90) {    // If button down
         var alpha = 1.0/8;
         var beta = alpha/32;
