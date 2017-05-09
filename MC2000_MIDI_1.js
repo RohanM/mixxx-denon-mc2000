@@ -78,9 +78,6 @@ mc2000.init = function(id, debug) {
 	var i=0;
 	for (i=1; i<=2; i++) {
 
-                // Rate (soft takeover)
-                engine.softTakeover("[Channel"+i+"]", "rate", true);
-
 		// Key lock
 		engine.connectControl("[Channel"+i+"]", "keylock", "mc2000.keylockSetLed");
 		// Sync
@@ -238,13 +235,6 @@ mc2000.selectKnob = function(channel, control, value, status, group) {
 
 
 // === PLAYBACK ===
-
-// Invert rate slider to match hardware markings (down -> faster)
-mc2000.rate = function(channel, control, value, status, group) {
-  var deck = channel + 1;
-  engine.setValue("[Channel"+deck+"]", "rate", -script.midiPitch(control, value, status));
-}
-
 mc2000.bendUpOrFf = function(channel, control, value, status, group) {
 
 	if ((status & 0xF0)===0x90){ // If button down

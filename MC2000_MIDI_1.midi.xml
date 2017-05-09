@@ -1272,18 +1272,18 @@
             </control>
             <control>
                 <group>[Channel1]</group>
-                <key>mc2000.rate</key>
+                <key>rate</key>
                 <status>0xE0</status>
                 <options>
-                    <script-binding/>
+                    <soft-takeover/>
                 </options>
             </control>
             <control>
                 <group>[Channel2]</group>
-                <key>mc2000.rate</key>
+                <key>rate</key>
                 <status>0xE1</status>
                 <options>
-                    <script-binding/>
+                    <soft-takeover/>
                 </options>
             </control>
         </controls>
