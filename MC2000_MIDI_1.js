@@ -414,13 +414,13 @@ mc2000.wheelTurn = function(channel, control, value, status, group) {
     var deck = channel + 1;
 
     // B: For a control that centers on 0x40 (64):
-    var newValue = (value - 64) / 3;
+    var newValue = (value - 64);
 
     // In either case, register the movement
     if (engine.isScratching(deck)) {
       engine.scratchTick(deck, newValue); // Scratch!
     } else {
-      engine.setValue('[Channel'+deck+']', 'jog', newValue); // Pitch bend
+      engine.setValue('[Channel'+deck+']', 'jog', newValue / 3); // Pitch bend
     }
 };
 
